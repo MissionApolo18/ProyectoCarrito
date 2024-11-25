@@ -68,51 +68,6 @@ export const obtenerJuegosPorConsola = async (req, res) => {
   }
 };
 
+// Función para agregar un juego al carrito
 
 
-
-
-
-
-
-// Actualizar el carrito
-export const actualizarCarrito = async (req, res) => {
-  const { id_carrito, id_juego, cantidad } = req.body;
-
-  try {
-    // Verifica si el juego ya está en el carrito
-    const juegoEnCarrito = await EstadoJuegos.findOne({
-      where: { id_carrito, id_juego },
-    });
-
-    if (juegoEnCarrito) {
-      // Si ya existe, actualiza la cantidad
-      juegoEnCarrito.cantidad += cantidad;
-      await juegoEnCarrito.save();
-    } else {
-      // Si no existe, crea un nuevo registro
-      await EstadoJuegos.create({ id_carrito, id_juego, cantidad });
-    }
-
-    res.status(200).send("Carrito actualizado");
-  } catch (error) {
-    console.error("Error al actualizar el carrito:", error);
-    res.status(500).send("Error al actualizar el carrito");
-  }
-};
-
-// Eliminar un juego del carrito
-export const eliminarJuegoDelCarrito = async (req, res) => {
-  const { id_carrito, id_juego } = req.body;
-
-  try {
-    await EstadoJuegos.destroy({
-      where: { id_carrito, id_juego },
-    });
-
-    res.status(200).send("Juego eliminado del carrito");
-  } catch (error) {
-    console.error("Error al eliminar juego del carrito:", error);
-    res.status(500).send("Error al eliminar juego del carrito");
-  }
-};

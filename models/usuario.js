@@ -1,17 +1,18 @@
 import { DataTypes } from 'sequelize';
-import sequelize from './db.js';  // Asegúrate de importar la conexión
-import { Hooks } from 'sequelize/lib/hooks';
+import db from '../config/db.js'; 
 
-const Usuario = sequelize.define('Usuario', {
+const Usuario = db.define('Usuario', {
   // Definir las columnas de la tabla
   id_usuario: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   username: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   rol: {
     type: DataTypes.STRING,
@@ -30,6 +31,7 @@ const Usuario = sequelize.define('Usuario', {
   },
   
 }, {
+  tableName: "usuario",
   timestamps: false,
 });
 

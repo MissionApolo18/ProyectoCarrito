@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title Carrito de Compras
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js") // Puedes cambiar la CDN si es necesario
+  body
+    h1 Carrito de Compras
+
+    // Botones de agregar productos
+    button(onclick="agregarAlCarrito(1, 'Juego 1', 'imagen1.png')") Agregar Juego 1
+    button(onclick="agregarAlCarrito(2, 'Juego 2', 'imagen2.png')") Agregar Juego 2
+    button(onclick="agregarAlCarrito(3, 'Juego 3', 'imagen3.png')") Agregar Juego 3
+    button(onclick="agregarAlCarrito(4, 'Juego 4', 'imagen4.png')") Agregar Juego 4
+    button(onclick="agregarAlCarrito(5, 'Juego 5', 'imagen5.png')") Agregar Juego 5
+
+    // Contenedor para el carrito
+    div#carrito-contenido
+      h2 Carrito
+      div#carrito-items
+        // Aquí se agregarán los productos del carrito dinámicamente
+      p Total productos: 
+        span#contador-carrito 0
+    
+    script(src="script.js")  // Enlazamos el archivo script.js
+

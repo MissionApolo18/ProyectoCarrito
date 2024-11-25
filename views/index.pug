@@ -21,7 +21,8 @@ html
           button.submit-button(type='submit') Iniciar sesi&oacute;n
         a.forgot-password(href='#') Olvid&eacute; mi contrase&ntilde;a
         a.forgot-password(href='#') Crear Cuenta
-      img#carrito.img-carrito(src='/images/cart.png' alt='Carrito')
+      a(href="/carrito")
+        img#carrito.img-carrito(src='/images/cart.png' alt='Carrito')
 
     // Sección para seleccionar plataforma
     .selection-container
@@ -43,7 +44,7 @@ html
             p Precio: $#{game.price}
             p Stock disponible: #{game.stock}
             input(type="number" placeholder="Cantidad" min="1" max=game.stock)
-            button Agregar a carrito
+            button(onclick='obtenerJuegoToCarrito(game, game.title, game.image)') Agregar a carrito
 
     footer
       p &copy; 2024 Tienda de Videojuegos

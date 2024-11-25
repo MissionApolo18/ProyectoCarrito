@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
   const toggleButton = document.getElementById('toggleButton');
   const formContainer = document.getElementById('formContainer');
-
+  const carritoIcono = document.getElementById('carrito');
+  const carritoContenido = document.getElementById('carrito-contenido');
+  const contadorCarrito = document.getElementById('contador-carrito');
+  
   toggleButton.addEventListener('click', function () {
     console.log("Botón de usuario fue presionado");
-
-    // Alterna directamente el display del formulario
+    
+    // Alterna el display del formulario
     if (formContainer.style.display === '' || formContainer.style.display === 'none') {
       formContainer.style.display = 'block';  // Muestra el formulario
     } else {
@@ -27,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <p>Precio: $${juego.price}</p>
         <p>Stock: ${juego.stock}</p>
         <input type="number" placeholder="Cantidad Vendida" min="1">
-        <button>Registrar Venta</button>
+        <button onclick="obtenerJuegoToCarrito(${juego.id}, '${juego.title}', '${juego.image}')">Agregar al carrito</button>
       `;
       container.appendChild(card);
     });
@@ -51,67 +54,82 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Carrito de compras
-  const carrito = [];
-  const carritoIcono = document.getElementById("carrito");
-  const carritoContenido = document.getElementById("carrito-contenido");
-  const contadorCarrito = document.getElementById("contador-carrito");
-
-  // Mostrar/ocultar el carrito
-  carritoIcono?.addEventListener("click", () => {
-    carritoContenido.classList.toggle("visible");
-    carritoContenido.classList.toggle("oculto");
-  });
-
-  const agregarAlCarrito = (nombre, imagen) => {
-    const productoExistente = carrito.find((item) => item.nombre === nombre);
-
+  const obtenerJuegoToCarrito = (id_juego, nombre, imagen) => {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const productoExistente = carrito.find(item => item.id_juego === id_juego);
+  
+    // Si el juego ya existe en el carrito, aumentamos la cantidad
     if (productoExistente) {
       productoExistente.cantidad += 1;
     } else {
-      carrito.push({ nombre, imagen, cantidad: 1 });
+      // Si el juego no existe en el carrito, lo agregamos con cantidad 1
+      carrito.push({ id_juego, nombre, imagen, cantidad: 1 });
     }
-
-    actualizarCarrito();
+  
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+  
+    actualizarCarritoVista();
   };
 
-  const actualizarCarrito = () => {
+  // Actualizar la vista del carrito
+  const actualizarCarritoVista = () => {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const carritoItems = document.getElementById("carrito-items");
-    carritoItems.innerHTML = "";
+    carritoItems.innerHTML = ""; // Limpiar el contenido actual del carrito
 
-    const totalCantidad = carrito.reduce(
-      (total, producto) => total + producto.cantidad,
-      0
-    );
-    contadorCarrito.textContent = totalCantidad;
+    // Contador de productos en el carrito
+    const totalCantidad = carrito.reduce((total, producto) => total + producto.cantidad, 0);
+    contadorCarrito.textContent = totalCantidad; // Mostrar cantidad total
 
-    carrito.forEach((producto, index) => {
+    // Mostrar los productos del carrito
+    carrito.forEach((producto) => {
       const div = document.createElement("div");
       div.classList.add("carrito-item");
       div.innerHTML = `
         <img src="${producto.imagen}" alt="${producto.nombre}" style="width: 50px; height: 50px;">
         <p>Nombre: ${producto.nombre}</p>
         <p>Cantidad: ${producto.cantidad}</p>
-        <button class="remove-item" data-index="${index}">❌ Eliminar</button>
+        <button class="remove-item" data-id="${producto.id_juego}">❌ Eliminar</button>
       `;
       carritoItems.appendChild(div);
     });
 
+    // Agregar evento de eliminar
     agregarEventosEliminar();
   };
 
+  // Eliminar un producto del carrito
   const agregarEventosEliminar = () => {
     const removeButtons = document.querySelectorAll(".remove-item");
+
     removeButtons.forEach((button) => {
       button.addEventListener("click", (event) => {
-        const index = parseInt(event.target.getAttribute("data-index"));
-        carrito.splice(index, 1);
-        actualizarCarrito();
+        const id_juego = event.target.getAttribute("data-id");
+        eliminarDelCarrito(id_juego);
       });
     });
   };
 
-  
+  // Eliminar un producto del carrito
+  const eliminarDelCarrito = (id_juego) => {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    carrito = carrito.filter(item => item.id_juego !== id_juego); // Filtrar el juego que se quiere eliminar
+    localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardar el carrito actualizado
+    actualizarCarritoVista(); // Actualizar la vista
+  };
+
+  // Mostrar/ocultar el carrito
+  carritoIcono?.addEventListener("click", () => {
+    carritoContenido.classList.toggle("visible");
+    carritoContenido.classList.toggle("oculto");
+  });
 });
+
+
+
+
+
+
 
 // Función para cambiar la plataforma seleccionada
 function cambiarPlataforma() {
