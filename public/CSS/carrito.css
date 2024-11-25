@@ -1,0 +1,40 @@
+#carrito-contenido {
+    display: none; /* Ocultar el carrito por defecto */
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 200px;
+    color: antiquewhite;
+}
+
+#carrito-items div {
+    margin-bottom: 5px;
+    transition: filter 0.3s ease;
+    filter: grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(500%);
+}
+
+.img-carrito {
+    transition: filter 0.3s ease; /* Transición para un efecto suave */
+    cursor: pointer; /* Cambia el cursor a un dedo señalando */
+}
+
+.img-carrito:hover {
+    filter: invert(60%) sepia(80%) hue-rotate(180deg) saturate(200%);
+}
+
+/* Estilos del marcador de cantidad */
+.cart-count {
+    position: absolute;
+    top: -10px;      /* Ajusta la posición */
+    right: -10px;    /* Ajusta la posición */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    display: none;   /* Oculto por defecto */
+}

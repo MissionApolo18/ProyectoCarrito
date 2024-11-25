@@ -1,0 +1,202 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #EACDF6;
+    color: #5C0D68;
+    padding: 20px;
+}
+nav a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    border-bottom: 2px solid transparent; /* Línea invisible debajo */
+    transition: border-bottom 0.3s ease; /* Efecto de animación */
+}
+
+nav a:hover {
+    border-bottom: 2px solid white; /* Muestra la línea al pasar el mouse */
+}
+
+.container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-container {
+    display: none; /* Establece el formulario como oculto por defecto */
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-container label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-container input {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #5C0D68;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #5C0D68;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 15px;
+    color: #5C0D68;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none; /* Clase para ocultar elementos */
+}
+
+.toggle-button {
+    padding: 5px 5px;
+    font-size: 16px;
+    color: #5C0D68;
+    border: none ;
+    border-radius: 9px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    
+}
+
+.toggle-button:hover {
+    background-color: #9225a3;
+}
+
+header {
+    text-align: center;
+    color: #9458A1;
+}
+
+h2 {
+    color: #A66FB9;
+}
+
+.selection-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.platform-content {
+    background-color: #C692DD;
+    padding: 20px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    background-color: #A66FB9;
+    border-radius: 10px;
+    padding: 15px;
+    width: 30%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.card input {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-sizing: border-box; /* Esta propiedad hace que no se salga del card */
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #5C0D68;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #9458A1;
+}
+
+/* Estilo general del select */
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 2px solid #9458A1; /* Color del borde */
+    background-color: #EACDF6; /* Color de fondo */
+    color: #5C0D68; /* Color del texto */
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none; /* Elimina el estilo predeterminado en algunos navegadores */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Estilo para la flecha de la lista desplegable */
+select::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    pointer-events: none;
+    color: #5C0D68;
+}
+
+/* Estilo para cada opción dentro del select */
+select option {
+    background-color: #C692DD;
+    color: #5C0D68;
+    padding: 10px;
+}
+
+/* Efecto al pasar el cursor */
+select:hover {
+    background-color: #A66FB9;
+}
