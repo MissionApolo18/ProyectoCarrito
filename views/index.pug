@@ -6,9 +6,11 @@ html
     title Tienda de Videojuegos
     link(rel='stylesheet' href='/CSS/estilo.css')
     link(rel='stylesheet' href='/CSS/carrito.css')
+    link(rel="shortcut icon", href="/images/logo.ico", type="image/x-icon")
+
   body
     header
-      h1 Tienda de Videojuegos
+      img(src="/images/logo.jpeg", alt="Logo")
     nav.navbar
       a#userDropdown.toggle-button Usuario
       ul#userMenu.menu.hidden
@@ -42,11 +44,11 @@ html
               p Precio: $#{game.price}
               p Stock disponible: #{game.stock}
               input(type="number" placeholder="Cantidad" min="1" max=game.stock)
-              button(onclick='obtenerJuegoToCarrito(game, game.title, game.image)') Agregar a carrito
+              button(onclick=`agregarAlCarrito(game.title, game.imagen)`) Agregar a carrito
       else 
         p No hay juegos disponibles
 
     footer
-      p &copy; 2024 Tienda de Videojuegos
+      p &copy; 2024 Central Games
 
     script(src='/Js/script.js')

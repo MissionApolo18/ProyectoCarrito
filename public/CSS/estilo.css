@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #EACDF6;
-    color: #5C0D68;
+    background-color: rgba(78, 13, 97, 0.93);
+    color: rgb(31, 28, 28);
     padding: 20px;
 }
 
@@ -10,14 +10,11 @@ nav {
     color: white;
     padding: 10px;
     border-bottom: 2px solid transparent;
-    /* Línea invisible debajo */
     transition: border-bottom 0.3s ease;
-    /* Efecto de animación */
 }
 
 nav:hover {
     border-bottom: 2px solid white;
-    /* Muestra la línea al pasar el mouse */
 }
 
 .navbar {
@@ -32,7 +29,6 @@ nav:hover {
     margin: 0;
     padding: 0;
     display: none;
-    /* Oculta el menú inicialmente */
     position: absolute;
     background-color: white;
     border: 1px solid #ccc;
@@ -46,7 +42,7 @@ nav:hover {
 
 .menu li a {
     text-decoration: none;
-    color: black;
+    color: rgb(31, 28, 28);
 }
 
 .menu li:hover {
@@ -55,13 +51,11 @@ nav:hover {
 
 .menu.show {
     display: block;
-    /* Muestra el menú cuando se agrega la clase "show" */
 }
 
 .toggle-button {
     cursor: pointer;
 }
-
 
 .container {
     text-align: center;
@@ -70,7 +64,6 @@ nav:hover {
 
 .form-container {
     display: none;
-    /* Establece el formulario como oculto por defecto */
     flex-direction: column;
     align-items: center;
     background-color: white;
@@ -97,7 +90,7 @@ nav:hover {
 
 .submit-button {
     padding: 10px 20px;
-    background-color: #5C0D68;
+    background-color: rgba(78, 13, 97, 0.93);
     color: white;
     border: none;
     border-radius: 5px;
@@ -105,13 +98,13 @@ nav:hover {
 }
 
 .submit-button:hover {
-    background-color: #5C0D68;
+    background-color: rgba(78, 13, 97, 0.93);
 }
 
 .forgot-password {
     display: block;
     margin-top: 15px;
-    color: #5C0D68;
+    color: rgba(78, 13, 97, 0.93);
     text-decoration: none;
 }
 
@@ -126,7 +119,7 @@ nav:hover {
 .toggle-button {
     padding: 5px 5px;
     font-size: 16px;
-    color: #5C0D68;
+    color: rgba(78, 13, 97, 0.93);
     border: none;
     border-radius: 9px;
     cursor: pointer;
@@ -136,16 +129,16 @@ nav:hover {
 }
 
 .toggle-button:hover {
-    background-color: #9225a3;
+    background-color: rgba(78, 13, 97, 0.93);
 }
 
 header {
     text-align: center;
-    color: #9458A1;
+    color: rgba(78, 13, 97, 0.93);
 }
 
 h2 {
-    color: #A66FB9;
+    color: rgba(78, 13, 97, 0.93);
 }
 
 .selection-container {
@@ -154,7 +147,7 @@ h2 {
 }
 
 .platform-content {
-    background-color: #C692DD;
+    background-color: rgb(31, 28, 28);
     padding: 20px;
     margin-bottom: 5px;
     border-radius: 10px;
@@ -168,7 +161,7 @@ h2 {
 }
 
 .card {
-    background-color: #A66FB9;
+    background-color: rgba(78, 13, 97, 0.93);
     border-radius: 10px;
     padding: 15px;
     width: 30%;
@@ -189,7 +182,6 @@ h2 {
     margin: 10px 0;
     border-radius: 5px;
     box-sizing: border-box;
-    /* Esta propiedad hace que no se salga del card */
 }
 
 .card img {
@@ -199,7 +191,7 @@ h2 {
 }
 
 button {
-    background-color: #5C0D68;
+    background-color: rgba(78, 13, 97, 0.93);
     color: white;
     padding: 5px;
     border: none;
@@ -209,47 +201,39 @@ button {
 }
 
 button:hover {
-    background-color: #9458A1;
+    background-color: rgb(31, 28, 28);
 }
 
-/* Estilo general del select */
 select {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     border-radius: 10px;
-    border: 2px solid #9458A1;
-    /* Color del borde */
-    background-color: #EACDF6;
-    /* Color de fondo */
-    color: #5C0D68;
-    /* Color del texto */
+    border: 2px solid rgba(78, 13, 97, 0.93);
+    background-color: rgba(78, 13, 97, 0.93);
+    color: white;
     outline: none;
     cursor: pointer;
     -webkit-appearance: none;
-    /* Elimina el estilo predeterminado en algunos navegadores */
     -moz-appearance: none;
     appearance: none;
 }
 
-/* Estilo para la flecha de la lista desplegable */
 select::after {
     content: '▼';
     position: absolute;
     right: 10px;
     top: 15px;
     pointer-events: none;
-    color: #5C0D68;
+    color: white;
 }
 
-/* Estilo para cada opción dentro del select */
 select option {
-    background-color: #C692DD;
-    color: #5C0D68;
+    background-color: rgb(31, 28, 28);
+    color: white;
     padding: 10px;
 }
 
-/* Efecto al pasar el cursor */
 select:hover {
-    background-color: #A66FB9;
+    background-color: rgba(78, 13, 97, 0.93);
 }
