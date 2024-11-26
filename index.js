@@ -4,6 +4,7 @@ import db from "./config/db.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import { juegosInfo } from "./controllers/juegosController.js";
 import router from "./routes/inicio_router.js"; // Importar el router principal
 import setupAssociations from "./models/associations.js";
 import { obtenerJuegosPorConsola } from "./controllers/juegosController.js";
@@ -33,7 +34,7 @@ try {
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {juegosInfo});
 })
 app.get("/juegos/:plataforma", obtenerJuegosPorConsola);
 

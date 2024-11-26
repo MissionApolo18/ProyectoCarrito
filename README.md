@@ -14,13 +14,20 @@ Este es una vista rápida a lo que sería una página de compras de videojuegos 
 
 ## Carpetas / Organización
 Esta sección abarcaremos la organización de cada carpeta y su función principal dentro del proyecto.
+
 ### Config
+Aquí es donde se conecta principalmente la base de datos.
 
 ### Controllers
 En esta sección se encuentran aquellos archivos controladores,que además permiten añadir otras funcionalidades, como:
 
-- Añadir la base de datos
-- Objetos para su posterior uso (?)
+- Añadir filas a la base de datos
+- Objetos para su posterior uso
+- Interacciones entre la interfaz y la base de datos
+
+### Models
+Su función principal es establecer una manera de conectar la base de datos con el resto del sistema, estas estructuras permiten mantener un orden y una estructura más visible y moldeable de la base de datos.
+
 ### Public
 Aquí yacen los elementos disponibles a los que cualquiera puede acceder fácilmente, tales como:
 - Arcivos CSS
@@ -58,8 +65,5 @@ Actualmente, se encuentra "fragmentada" en capas, las cuales permiten que su mod
 
 ## Por Añadir
 
-- Sistema de seguridad: 
-    - Tabla usuario, comprobar que el correo no se repita y lo básico de una contraseña (8 a 10 caracteres), agregar ID_rol
-    - Jerarquizar los usuarios: admin, usuario y añadirlo a la bd
 - En el header agregar el nombre de usuario, funcionalidades de añadir, eliminar o modificar videojuego para la parte del admin.
 - Reporte de inventario, al final debe de crear un PDF

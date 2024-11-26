@@ -3,21 +3,23 @@ html
   head
     meta(charset='UTF-8')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    title Fan-tienda de Videojuegos
+    title Tienda de Videojuegos
     link(rel='stylesheet' href='/CSS/estilo.css')
     link(rel='stylesheet' href='/CSS/carrito.css')
   body
     header
-      h1 Fan-tienda de Videojuegos
+      h1 Tienda de Videojuegos
     nav.navbar
-      a#userDropdown.toggle-button(href='Usuario') Usuario
+      a#userDropdown.toggle-button Usuario
       ul#userMenu.menu.hidden
         li
           a(href='/login') Iniciar sesión
         li
           a(href='/registro') Registrarse
-      a(href="/carrito")
-        img#carrito.img-carrito(src='/images/cart.png' alt='Carrito')
+      #carrito-contenido.oculto
+        #carrito-items
+        span#contador-carrito 0
+      img#carrito(src='/images/cart.png' alt='Carrito')
 
     // Sección para seleccionar plataforma
     .selection-container

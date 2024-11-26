@@ -2,9 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Elementos del DOM
   const toggleButton = document.getElementById("toggleButton");
   const formContainer = document.getElementById("formContainer");
-  const carritoIcono = document.getElementById("carrito");
-  const carritoContenido = document.getElementById("carrito-contenido");
-  const contadorCarrito = document.getElementById("contador-carrito");
   const userButton = document.getElementById("userButton");
   const userDropdown = document.getElementById("userDropdown");
   const userMenu = document.getElementById("userMenu");
@@ -14,24 +11,27 @@ document.addEventListener("DOMContentLoaded", function () {
   // Mostrar el username o las opciones de login/registro
   const username = window.sessionStorage.getItem("username");
 
-  if (userButton) {
-    if (username) {
-      userButton.textContent = username;
-      formContainer.innerHTML = `
-        <ul class="menu">
-          <li><a href="/formas-pago">Mis formas de pago</a></li>
-          <li><a href="#">Próximamente más</a></li>
-        </ul>
-      `;
-    } else {
-      userButton.textContent = "Usuario";
-      formContainer.innerHTML = `
-        <ul class="menu">
-          <li><a href="/login">Iniciar sesión</a></li>
-          <li><a href="/registro">Registrarse</a></li>
-        </ul>
-      `;
-    }
+  if (username) {
+    // Usuario autenticado: cambiar texto y opciones del menú
+    userDropdown.textContent = "Mi cuenta";
+    userMenu.innerHTML = `
+      <li>
+        <a href="/metodos-pago">Métodos de pago</a>
+      </li>
+      <li>
+        <a href="#">Próximamente más</a>
+      </li>
+      <li>
+        <a href="#" id="logout">Cerrar sesión</a>
+      </li>
+    `;
+
+    // Manejar el cierre de sesión
+    const logoutButton = document.getElementById("logout");
+    logoutButton.addEventListener("click", () => {
+      window.sessionStorage.removeItem("username");
+      window.location.href = "/"; // Redirigir al inicio
+    });
   }
 
   // Mostrar/ocultar el formulario al presionar el botón de usuario
@@ -91,78 +91,120 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error al cargar los juegos:", error);
       container.innerHTML = "<p>Error al cargar los juegos</p>";
     }
+  }
+  );
+
+  // Array para almacenar los productos en el carrito
+  const carrito = [];
+
+  // Función para mostrar los juegos de la consola seleccionada y ocultar el resto
+  function mostrarJuegos(consolaId) {
+    // Ocultar todas las secciones de juegos
+    const seccionesJuegos = document.querySelectorAll('.juegos');
+    seccionesJuegos.forEach(seccion => seccion.style.display = 'none');
+
+    // Mostrar solo la sección de juegos correspondiente a la consola seleccionada
+    const seccionSeleccionada = document.getElementById(consolaId);
+    seccionSeleccionada.style.display = 'flex';
+  }
+
+  // Seleccionar los botones de "Agregar al carrito" y agregar eventos
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', (event) => {
+      const productoImagen = event.target.getAttribute('data-img');
+      const productoNombre = event.target.previousElementSibling.getAttribute('alt');
+      agregarAlCarrito(productoNombre, productoImagen);
+    });
   });
 
-  // Carrito de compras
-  const obtenerJuegoToCarrito = (id_juego, nombre, imagen) => {
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const productoExistente = carrito.find((item) => item.id_juego === id_juego);
+  // Seleccionar la imagen del carrito y el contenedor del contenido
+  const carritoIcono = document.getElementById('carrito');
+  const carritoContenido = document.getElementById('carrito-contenido');
+  const contadorCarrito = document.getElementById('contador-carrito');
+
+  // Muestra y oculta el contenido del carrito al hacer clic en el icono
+  carritoIcono.addEventListener('click', () => {
+    carritoContenido.classList.toggle('visible');
+    carritoContenido.classList.toggle('oculto');
+  });
+
+  // Función para agregar productos al carrito
+  function agregarAlCarrito(nombre, imagen) {
+    const productoExistente = carrito.find(item => item.nombre === nombre);
 
     if (productoExistente) {
+      // Incrementa la cantidad si el producto ya existe en el carrito
       productoExistente.cantidad += 1;
     } else {
-      carrito.push({ id_juego, nombre, imagen, cantidad: 1 });
+      // Agrega el nuevo producto al carrito
+      carrito.push({ nombre, imagen, cantidad: 1 });
     }
 
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    actualizarCarritoVista();
-  };
+    actualizarCarrito();
+  }
 
-  // Actualizar la vista del carrito
-  const actualizarCarritoVista = () => {
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const carritoItems = document.getElementById("carrito-items");
-    if (!carritoItems) return;
+  // Función para actualizar el contenido del carrito y el contador
+  function actualizarCarrito() {
+    const carritoItems = document.getElementById('carrito-items');
+    carritoItems.innerHTML = ''; // Limpia el contenido actual del carrito
 
-    carritoItems.innerHTML = ""; // Limpiar contenido actual
-
-    // Contador total de productos
+    // Actualiza el contador de productos en el carrito
     const totalCantidad = carrito.reduce((total, producto) => total + producto.cantidad, 0);
     contadorCarrito.textContent = totalCantidad;
 
-    // Mostrar productos
-    carrito.forEach((producto) => {
-      const div = document.createElement("div");
-      div.classList.add("carrito-item");
+    // Muestra los productos en el carrito
+    carrito.forEach((producto, index) => {
+      const div = document.createElement('div');
+      div.classList.add('carrito-item');
       div.innerHTML = `
-        <img src="${producto.imagen}" alt="${producto.nombre}" style="width: 50px; height: 50px;">
-        <p>Nombre: ${producto.nombre}</p>
-        <p>Cantidad: ${producto.cantidad}</p>
-        <button class="remove-item" data-id="${producto.id_juego}">❌ Eliminar</button>
-      `;
+            <img src="${producto.imagen}" alt="${producto.nombre}" style="width: 50px; height: 50px;">
+            <p>Nombre: ${producto.nombre}</p>
+            <p>Cantidad: ${producto.cantidad}</p>
+            <button class="remove-item" data-index="${index}">❌ Eliminar</button>
+        `;
       carritoItems.appendChild(div);
     });
 
-    agregarEventosEliminar();
-  };
+    agregarEventosEliminar(); // Agrega los eventos para eliminar productos
+  }
 
-  // Eventos para eliminar productos
-  const agregarEventosEliminar = () => {
-    const removeButtons = document.querySelectorAll(".remove-item");
+  // Función para agregar eventos de eliminación a cada botón "Eliminar"
+  function agregarEventosEliminar() {
+    const removeButtons = document.querySelectorAll('.remove-item');
+    removeButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        const index = parseInt(event.target.getAttribute('data-index'));
 
-    removeButtons.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        const id_juego = event.target.getAttribute("data-id");
-        eliminarDelCarrito(id_juego);
+        // Elimina el producto del array 'carrito' y actualiza el carrito
+        carrito.splice(index, 1);
+        actualizarCarrito();
       });
     });
-  };
+  }
 
-  // Eliminar productos del carrito
-  const eliminarDelCarrito = (id_juego) => {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    carrito = carrito.filter((item) => item.id_juego !== parseInt(id_juego));
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    actualizarCarritoVista();
-  };
-
-  // Mostrar/ocultar el carrito
-  carritoIcono?.addEventListener("click", () => {
-    carritoContenido.classList.toggle("visible");
-    carritoContenido.classList.toggle("oculto");
-  });
 });
 
+window.obtenerJuegoToCarrito = async (id_juego, nombre, imagen) => {
+  const id_usuario = window.sessionStorage.getItem("id_usuario");
+  const cantidad = 1;
+
+  try {
+    const response = await fetch("/carrito/agregar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id_usuario, id_juego, cantidad }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Agregado al carrito:", data);
+    } else {
+      console.error("Error al agregar:", data.message);
+    }
+  } catch (error) {
+    console.error("Error de conexión:", error);
+  }
+};
 
 
 

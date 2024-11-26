@@ -1,11 +1,13 @@
 import JuegoConsola from "../models/juegoConsola.js";
+import Carrito from "../models/carrito.js";
+
 const plataformas = {
   1: "Xbox",
   2: "PSP",
   3: "Nintendo",
 };
 
-const juegosInfo = {
+export const juegosInfo = {
   1: [ // Xbox
     { id: 1, title: "Halo Infinite", image: "/images/halo.jpg" },
     { id: 2, title: "Gears of War", image: "/images/gears_of_war.jpg" },
@@ -69,5 +71,66 @@ export const obtenerJuegosPorConsola = async (req, res) => {
 };
 
 // Función para agregar un juego al carrito
+export const agregarAlCarrito = async (req, res) => {
+  try {
+    console.log("Datos recibidos en agregarAlCarrito:", req.body); // Verifica qué datos llegan
+    const { id_usuario, id_juego, cantidad } = req.body;
+
+    if (!id_usuario || !id_juego || !cantidad) {
+      return res.status(400).json({ message: "Faltan datos obligatorios" });
+    }
+
+    let item = await Carrito.findOne({ where: { id_usuario, id_juego } });
+
+    if (item) {
+      item.cantidad += cantidad;
+      await item.save();
+    } else {
+      item = await Carrito.create({ id_usuario, id_juego, cantidad });
+    }
+
+    res.status(200).json({ message: "Juego agregado al carrito", item });
+  } catch (error) {
+    console.error("Error al agregar al carrito:", error);
+    res.status(500).json({ message: "Error al agregar al carrito" });
+  }
+};
 
 
+export const obtenerCarrito = async (req, res) => {
+  try {
+    const { id_usuario } = req.query; // Suponiendo que el ID del usuario viene en la query
+
+    const carrito = await Carrito.findAll({
+      where: { id_usuario },
+      include: [{ model: Juego }], // Incluye información adicional de los juegos
+    });
+
+    res.status(200).json(carrito);
+  } catch (error) {
+    console.error("Error al obtener el carrito:", error);
+    res.status(500).json({ message: "Error al obtener el carrito" });
+  }
+};
+
+const obtenerJuegoToCarrito = async (id_juego, nombre, imagen) => {
+  const id_usuario = window.sessionStorage.getItem("id_usuario"); // ID del usuario
+  const cantidad = 1;
+
+  try {
+    const response = await fetch("/carrito/agregar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id_usuario, id_juego, cantidad }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Agregado al carrito:", data);
+    } else {
+      console.error("Error al agregar:", data.message);
+    }
+  } catch (error) {
+    console.error("Error de conexión:", error);
+  }
+};
