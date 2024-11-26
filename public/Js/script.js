@@ -1,87 +1,126 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const toggleButton = document.getElementById('toggleButton');
-  const formContainer = document.getElementById('formContainer');
-  const carritoIcono = document.getElementById('carrito');
-  const carritoContenido = document.getElementById('carrito-contenido');
-  const contadorCarrito = document.getElementById('contador-carrito');
-  
-  toggleButton.addEventListener('click', function () {
-    console.log("Botón de usuario fue presionado");
-    
-    // Alterna el display del formulario
-    if (formContainer.style.display === '' || formContainer.style.display === 'none') {
-      formContainer.style.display = 'block';  // Muestra el formulario
+document.addEventListener("DOMContentLoaded", function () {
+  // Elementos del DOM
+  const toggleButton = document.getElementById("toggleButton");
+  const formContainer = document.getElementById("formContainer");
+  const carritoIcono = document.getElementById("carrito");
+  const carritoContenido = document.getElementById("carrito-contenido");
+  const contadorCarrito = document.getElementById("contador-carrito");
+  const userButton = document.getElementById("userButton");
+  const userDropdown = document.getElementById("userDropdown");
+  const userMenu = document.getElementById("userMenu");
+  const container = document.querySelector(".card-container");
+  const select = document.getElementById("plataforma");
+
+  // Mostrar el username o las opciones de login/registro
+  const username = window.sessionStorage.getItem("username");
+
+  if (userButton) {
+    if (username) {
+      userButton.textContent = username;
+      formContainer.innerHTML = `
+        <ul class="menu">
+          <li><a href="/formas-pago">Mis formas de pago</a></li>
+          <li><a href="#">Próximamente más</a></li>
+        </ul>
+      `;
     } else {
-      formContainer.style.display = 'none';  // Oculta el formulario
+      userButton.textContent = "Usuario";
+      formContainer.innerHTML = `
+        <ul class="menu">
+          <li><a href="/login">Iniciar sesión</a></li>
+          <li><a href="/registro">Registrarse</a></li>
+        </ul>
+      `;
+    }
+  }
+
+  // Mostrar/ocultar el formulario al presionar el botón de usuario
+  toggleButton?.addEventListener("click", function () {
+    if (formContainer.style.display === "" || formContainer.style.display === "none") {
+      formContainer.style.display = "block"; // Mostrar
+    } else {
+      formContainer.style.display = "none"; // Ocultar
     }
   });
 
-  // Función para renderizar juegos
-  const renderJuegos = (juegos) => {
-    container.innerHTML = ""; // Limpiar contenedor
+  // Alternar menú desplegable del usuario
+  userDropdown?.addEventListener("click", (e) => {
+    e.preventDefault();
+    userMenu.classList.toggle("hidden");
+    userMenu.classList.toggle("show");
+  });
 
+  // Cerrar el menú si se hace clic fuera de él
+  document.addEventListener("click", (e) => {
+    if (!userDropdown?.contains(e.target) && !userMenu?.contains(e.target)) {
+      userMenu?.classList.add("hidden");
+      userMenu?.classList.remove("show");
+    }
+  });
+
+  // Función para renderizar juegos en el contenedor
+  const renderJuegos = (juegos) => {
+    if (!container) return;
+
+    container.innerHTML = ""; // Limpiar contenido anterior
     juegos.forEach((juego) => {
       const card = document.createElement("div");
       card.className = "card";
-
       card.innerHTML = `
         <img src="${juego.image}" alt="${juego.title}">
         <h3>${juego.title}</h3>
         <p>Precio: $${juego.price}</p>
         <p>Stock: ${juego.stock}</p>
-        <input type="number" placeholder="Cantidad Vendida" min="1">
+        <input type="number" placeholder="Cantidad" min="1">
         <button onclick="obtenerJuegoToCarrito(${juego.id}, '${juego.title}', '${juego.image}')">Agregar al carrito</button>
       `;
       container.appendChild(card);
     });
   };
 
-  // Manejar cambios en el select
+  // Manejar cambios en el select de plataformas
   select?.addEventListener("change", async (event) => {
     const consolaId = event.target.value;
 
     try {
-      // Llamar al backend para obtener los juegos
       const response = await fetch(`/juegos/${consolaId}`);
       if (!response.ok) throw new Error("Error al cargar juegos");
-
       const juegos = await response.json();
       renderJuegos(juegos);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error al cargar los juegos:", error);
       container.innerHTML = "<p>Error al cargar los juegos</p>";
     }
   });
 
   // Carrito de compras
   const obtenerJuegoToCarrito = (id_juego, nombre, imagen) => {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const productoExistente = carrito.find(item => item.id_juego === id_juego);
-  
-    // Si el juego ya existe en el carrito, aumentamos la cantidad
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const productoExistente = carrito.find((item) => item.id_juego === id_juego);
+
     if (productoExistente) {
       productoExistente.cantidad += 1;
     } else {
-      // Si el juego no existe en el carrito, lo agregamos con cantidad 1
       carrito.push({ id_juego, nombre, imagen, cantidad: 1 });
     }
-  
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-  
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
     actualizarCarritoVista();
   };
 
   // Actualizar la vista del carrito
   const actualizarCarritoVista = () => {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     const carritoItems = document.getElementById("carrito-items");
-    carritoItems.innerHTML = ""; // Limpiar el contenido actual del carrito
+    if (!carritoItems) return;
 
-    // Contador de productos en el carrito
+    carritoItems.innerHTML = ""; // Limpiar contenido actual
+
+    // Contador total de productos
     const totalCantidad = carrito.reduce((total, producto) => total + producto.cantidad, 0);
-    contadorCarrito.textContent = totalCantidad; // Mostrar cantidad total
+    contadorCarrito.textContent = totalCantidad;
 
-    // Mostrar los productos del carrito
+    // Mostrar productos
     carrito.forEach((producto) => {
       const div = document.createElement("div");
       div.classList.add("carrito-item");
@@ -94,11 +133,10 @@ document.addEventListener('DOMContentLoaded', function () {
       carritoItems.appendChild(div);
     });
 
-    // Agregar evento de eliminar
     agregarEventosEliminar();
   };
 
-  // Eliminar un producto del carrito
+  // Eventos para eliminar productos
   const agregarEventosEliminar = () => {
     const removeButtons = document.querySelectorAll(".remove-item");
 
@@ -110,12 +148,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   };
 
-  // Eliminar un producto del carrito
+  // Eliminar productos del carrito
   const eliminarDelCarrito = (id_juego) => {
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    carrito = carrito.filter(item => item.id_juego !== id_juego); // Filtrar el juego que se quiere eliminar
-    localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardar el carrito actualizado
-    actualizarCarritoVista(); // Actualizar la vista
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito = carrito.filter((item) => item.id_juego !== parseInt(id_juego));
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    actualizarCarritoVista();
   };
 
   // Mostrar/ocultar el carrito
@@ -124,7 +162,6 @@ document.addEventListener('DOMContentLoaded', function () {
     carritoContenido.classList.toggle("oculto");
   });
 });
-
 
 
 

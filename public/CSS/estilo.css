@@ -4,17 +4,64 @@ body {
     color: #5C0D68;
     padding: 20px;
 }
-nav a {
+
+nav {
     text-decoration: none;
     color: white;
     padding: 10px;
-    border-bottom: 2px solid transparent; /* Línea invisible debajo */
-    transition: border-bottom 0.3s ease; /* Efecto de animación */
+    border-bottom: 2px solid transparent;
+    /* Línea invisible debajo */
+    transition: border-bottom 0.3s ease;
+    /* Efecto de animación */
 }
 
-nav a:hover {
-    border-bottom: 2px solid white; /* Muestra la línea al pasar el mouse */
+nav:hover {
+    border-bottom: 2px solid white;
+    /* Muestra la línea al pasar el mouse */
 }
+
+.navbar {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    justify-items: center;
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    /* Oculta el menú inicialmente */
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.menu li {
+    padding: 8px 16px;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: black;
+}
+
+.menu li:hover {
+    background-color: #f0f0f0;
+}
+
+.menu.show {
+    display: block;
+    /* Muestra el menú cuando se agrega la clase "show" */
+}
+
+.toggle-button {
+    cursor: pointer;
+}
+
 
 .container {
     text-align: center;
@@ -22,7 +69,8 @@ nav a:hover {
 }
 
 .form-container {
-    display: none; /* Establece el formulario como oculto por defecto */
+    display: none;
+    /* Establece el formulario como oculto por defecto */
     flex-direction: column;
     align-items: center;
     background-color: white;
@@ -72,19 +120,19 @@ nav a:hover {
 }
 
 .hidden {
-    display: none; /* Clase para ocultar elementos */
+    display: none;
 }
 
 .toggle-button {
     padding: 5px 5px;
     font-size: 16px;
     color: #5C0D68;
-    border: none ;
+    border: none;
     border-radius: 9px;
     cursor: pointer;
     width: 100px;
     height: 40px;
-    
+    text-align: center;
 }
 
 .toggle-button:hover {
@@ -140,7 +188,8 @@ h2 {
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
-    box-sizing: border-box; /* Esta propiedad hace que no se salga del card */
+    box-sizing: border-box;
+    /* Esta propiedad hace que no se salga del card */
 }
 
 .card img {
@@ -169,12 +218,16 @@ select {
     padding: 10px;
     font-size: 16px;
     border-radius: 10px;
-    border: 2px solid #9458A1; /* Color del borde */
-    background-color: #EACDF6; /* Color de fondo */
-    color: #5C0D68; /* Color del texto */
+    border: 2px solid #9458A1;
+    /* Color del borde */
+    background-color: #EACDF6;
+    /* Color de fondo */
+    color: #5C0D68;
+    /* Color del texto */
     outline: none;
     cursor: pointer;
-    -webkit-appearance: none; /* Elimina el estilo predeterminado en algunos navegadores */
+    -webkit-appearance: none;
+    /* Elimina el estilo predeterminado en algunos navegadores */
     -moz-appearance: none;
     appearance: none;
 }

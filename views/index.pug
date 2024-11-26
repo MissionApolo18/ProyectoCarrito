@@ -10,17 +10,12 @@ html
     header
       h1 Fan-tienda de Videojuegos
     nav.navbar
-      a.toggle-button(href='#') Inicio
-      a#toggleButton.toggle-button Usuario
-      #formContainer.form-container.hidden
-        form
-          label(for='userId') ID:
-          input#userId(type='text' name='userId' placeholder='Introduce tu ID' required='')
-          label(for='password') Contrase&ntilde;a:
-          input#password(type='password' name='password' placeholder='Introduce tu contraseña' required='')
-          button.submit-button(type='submit') Iniciar sesi&oacute;n
-        a.forgot-password(href='#') Olvid&eacute; mi contrase&ntilde;a
-        a.forgot-password(href='#') Crear Cuenta
+      a#userDropdown.toggle-button(href='Usuario') Usuario
+      ul#userMenu.menu.hidden
+        li
+          a(href='/login') Iniciar sesión
+        li
+          a(href='/registro') Registrarse
       a(href="/carrito")
         img#carrito.img-carrito(src='/images/cart.png' alt='Carrito')
 
@@ -36,15 +31,18 @@ html
     // Sección dinámica para mostrar juegos de la plataforma seleccionada
     .platform-content
       h2 Juegos disponibles para #{plataforma}
-      .card-container
-        each game in games
-          .card
-            img(src=game.image, alt=game.title)
-            h3= game.title
-            p Precio: $#{game.price}
-            p Stock disponible: #{game.stock}
-            input(type="number" placeholder="Cantidad" min="1" max=game.stock)
-            button(onclick='obtenerJuegoToCarrito(game, game.title, game.image)') Agregar a carrito
+      if games && games.length
+        .card-container
+          each game in games
+            .card
+              img(src=game.image, alt=game.title)
+              h3= game.title
+              p Precio: $#{game.price}
+              p Stock disponible: #{game.stock}
+              input(type="number" placeholder="Cantidad" min="1" max=game.stock)
+              button(onclick='obtenerJuegoToCarrito(game, game.title, game.image)') Agregar a carrito
+      else 
+        p No hay juegos disponibles
 
     footer
       p &copy; 2024 Tienda de Videojuegos

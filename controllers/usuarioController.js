@@ -7,16 +7,15 @@ export const mostrarLogin = (req, res) => {
 
 export const registrarUsuario = async (req, res) => {
     const { username, email, password } = req.body;
-
     try {
         // Se define el rol por defecto como "cliente"
         const rol = "cliente";
-
+        const hashedPassword = await bcrypt.hash(password, 10);
         // Crea el nuevo usuario
         const nuevoUsuario = await Usuario.create({
             username,
             email,
-            password,  // Asumiendo que estás encriptando la contraseña antes de guardar
+            password: hashedPassword,  // Asumiendo que estás encriptando la contraseña antes de guardar
             rol,
         });
         console.log("Usuario registrado:", nuevoUsuario);
@@ -52,3 +51,32 @@ export const autenticarUsuario = async (req, res) => {
     }
 };
 
+export const iniciarSesion = async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        // Buscar al usuario por su nombre de usuario
+        const usuario = await Usuario.findOne({
+            where: { username }
+        });
+
+        // Si el usuario no existe
+        if (!usuario) {
+            return res.status(400).send('Usuario o contraseña incorrectos');
+        }
+
+        // Comparar la contraseña ingresada con la contraseña cifrada en la base de datos
+        const esContraseñaValida = await bcrypt.compare(password, usuario.password);
+
+        // Si la contraseña es incorrecta
+        if (!esContraseñaValida) {
+            return res.status(400).send('Usuario o contraseña incorrectos');
+        }
+
+        // Si la contraseña es correcta, iniciar sesión (podrías redirigir al usuario o usar sesiones)
+        res.redirect('/');  // Redirigir a la página principal o cualquier otra página
+    } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+        res.status(500).send('Error al iniciar sesión');
+    }
+}; 
