@@ -1,5 +1,10 @@
 import express from "express";
-import { mostrarLogin, registrarUsuario, autenticarUsuario, iniciarSesion } from "../controllers/usuarioController.js";
+import { 
+    mostrarLogin, 
+    registrarUsuario, 
+    iniciarSesion, 
+    cerrarSesion 
+} from "../controllers/usuarioController.js";
 
 const UsuarioRouter = express.Router();
 
@@ -14,10 +19,10 @@ UsuarioRouter.get("/registro", (req, res) => {
 // Ruta para registrar un nuevo usuario
 UsuarioRouter.post("/registro", registrarUsuario);
 
-// Ruta para autenticar un usuario en el login
-UsuarioRouter.post("/login", autenticarUsuario);
+// Ruta para iniciar sesión
+UsuarioRouter.post("/login", iniciarSesion);
 
-// Ruta alternativa para iniciar sesión con username y contraseña
-UsuarioRouter.post("/iniciar-sesion", iniciarSesion);
+// Ruta para cerrar sesión
+UsuarioRouter.get("/logout", cerrarSesion);
 
 export default UsuarioRouter;

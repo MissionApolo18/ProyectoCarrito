@@ -44,7 +44,7 @@ html
               p Precio: $#{game.price}
               p Stock disponible: #{game.stock}
               input(type="number" placeholder="Cantidad" min="1" max=game.stock)
-              button(onclick=`agregarAlCarrito(game.title, game.imagen)`) Agregar a carrito
+              button(onclick=`window.obtenerJuegoToCarrito(${game.id}, "${game.title}", "${game.image}")`) Agregar a carrito
       else 
         p No hay juegos disponibles
 

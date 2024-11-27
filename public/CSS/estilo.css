@@ -1,20 +1,20 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: rgba(78, 13, 97, 0.93);
-    color: rgb(31, 28, 28);
+    background-color: #512A83; /* Fondo oscuro pero no excesivo */
+    color: #F4F4F4; /* Texto claro */
     padding: 20px;
 }
 
 nav {
     text-decoration: none;
-    color: white;
+    color: #FFFFFF; /* Texto del nav */
     padding: 10px;
     border-bottom: 2px solid transparent;
     transition: border-bottom 0.3s ease;
 }
 
 nav:hover {
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid #FFD700; /* Efecto dorado para resaltar */
 }
 
 .navbar {
@@ -30,10 +30,11 @@ nav:hover {
     padding: 0;
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: #FFFFFF; /* Fondo claro */
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    color: #333333; /* Texto oscuro */
 }
 
 .menu li {
@@ -42,11 +43,11 @@ nav:hover {
 
 .menu li a {
     text-decoration: none;
-    color: rgb(31, 28, 28);
+    color: #333333;
 }
 
 .menu li:hover {
-    background-color: #f0f0f0;
+    background-color: #EEE; /* Suave cambio al pasar el cursor */
 }
 
 .menu.show {
@@ -55,6 +56,19 @@ nav:hover {
 
 .toggle-button {
     cursor: pointer;
+    padding: 5px 5px;
+    font-size: 16px;
+    color: #F4F4F4;
+    border: none;
+    border-radius: 9px;
+    background-color: #8255A7; /* Contraste */
+    width: 100px;
+    height: 40px;
+    text-align: center;
+}
+
+.toggle-button:hover {
+    background-color: #6A1A7A; /* Oscurece ligeramente */
 }
 
 .container {
@@ -66,12 +80,13 @@ nav:hover {
     display: none;
     flex-direction: column;
     align-items: center;
-    background-color: white;
+    background-color: #FFFFFF; /* Fondo claro */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     margin: 0 auto;
+    color: #333333; /* Texto oscuro */
 }
 
 .form-container label {
@@ -90,21 +105,21 @@ nav:hover {
 
 .submit-button {
     padding: 10px 20px;
-    background-color: rgba(78, 13, 97, 0.93);
-    color: white;
+    background-color: #8255A7; /* Más claro y contrastado */
+    color: #FFFFFF;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .submit-button:hover {
-    background-color: rgba(78, 13, 97, 0.93);
+    background-color: #6A1A7A; /* Oscurece ligeramente */
 }
 
 .forgot-password {
     display: block;
     margin-top: 15px;
-    color: rgba(78, 13, 97, 0.93);
+    color: #FFD700; /* Resalta pero sigue en la paleta */
     text-decoration: none;
 }
 
@@ -116,29 +131,13 @@ nav:hover {
     display: none;
 }
 
-.toggle-button {
-    padding: 5px 5px;
-    font-size: 16px;
-    color: rgba(78, 13, 97, 0.93);
-    border: none;
-    border-radius: 9px;
-    cursor: pointer;
-    width: 100px;
-    height: 40px;
-    text-align: center;
-}
-
-.toggle-button:hover {
-    background-color: rgba(78, 13, 97, 0.93);
-}
-
 header {
     text-align: center;
-    color: rgba(78, 13, 97, 0.93);
+    color: #FFD700; /* Resalta para header */
 }
 
 h2 {
-    color: rgba(78, 13, 97, 0.93);
+    color: #F4F4F4; /* Consistente con el texto principal */
 }
 
 .selection-container {
@@ -147,11 +146,12 @@ h2 {
 }
 
 .platform-content {
-    background-color: rgb(31, 28, 28);
+    background-color: #333333; /* Fondo más oscuro */
     padding: 20px;
     margin-bottom: 5px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
 }
 
 .card-container {
@@ -161,13 +161,13 @@ h2 {
 }
 
 .card {
-    background-color: rgba(78, 13, 97, 0.93);
+    background-color: #6A1A7A; /* Fondo de tarjetas más contrastado */
     border-radius: 10px;
     padding: 15px;
     width: 30%;
     margin-bottom: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: white;
+    color: #FFFFFF;
 }
 
 .card h3 {
@@ -191,8 +191,8 @@ h2 {
 }
 
 button {
-    background-color: rgba(78, 13, 97, 0.93);
-    color: white;
+    background-color: #8255A7; /* Botones con buen contraste */
+    color: #FFFFFF;
     padding: 5px;
     border: none;
     border-radius: 5px;
@@ -201,7 +201,7 @@ button {
 }
 
 button:hover {
-    background-color: rgb(31, 28, 28);
+    background-color: #6A1A7A; /* Ligero cambio al pasar */
 }
 
 select {
@@ -209,9 +209,9 @@ select {
     padding: 10px;
     font-size: 16px;
     border-radius: 10px;
-    border: 2px solid rgba(78, 13, 97, 0.93);
-    background-color: rgba(78, 13, 97, 0.93);
-    color: white;
+    border: 2px solid #8255A7; /* Bordes consistentes */
+    background-color: #8255A7; /* Selección más contrastada */
+    color: #FFFFFF;
     outline: none;
     cursor: pointer;
     -webkit-appearance: none;
@@ -219,21 +219,186 @@ select {
     appearance: none;
 }
 
-select::after {
-    content: '▼';
-    position: absolute;
-    right: 10px;
-    top: 15px;
-    pointer-events: none;
-    color: white;
-}
-
 select option {
-    background-color: rgb(31, 28, 28);
-    color: white;
+    background-color: #333333; /* Fondo para opciones */
+    color: #FFFFFF; /* Texto claro */
     padding: 10px;
 }
 
 select:hover {
-    background-color: rgba(78, 13, 97, 0.93);
+    background-color: #6A1A7A; /* Oscurece ligeramente */
+}
+
+/* Estilo para títulos principales */
+h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #FFD700; /* Resalta el título */
+    margin-bottom: 20px;
+}
+
+/* Estilo general para los formularios */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFFFFF; /* Fondo claro */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+form label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333; /* Texto oscuro */
+    margin-bottom: 5px;
+    align-self: flex-start; /* Alinea las etiquetas a la izquierda */
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #8255A7; /* Botón con contraste */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #6A1A7A; /* Efecto hover */
+}
+
+/* Estilo para los enlaces */
+p a {
+    color: #FFD700; /* Enlaces resaltados */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para mensajes de error */
+p.error {
+    color: #FF4D4D; /* Rojo claro para mensajes de error */
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Estilo para el footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #F4F4F4; /* Texto claro */
+    font-size: 14px;
+}
+
+/* Navbar */
+nav.navbar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#userDropdown {
+    background-color: #8255A7;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#userDropdown:hover {
+    background-color: #6A1A7A;
+}
+
+/* Menú desplegable */
+.menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    right: 0; /* Asegura que permanezca anclado */
+    background-color: #FFFFFF;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    min-width: 150px;
+}
+
+.menu li {
+    padding: 10px 20px;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: #333333;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.menu li:hover {
+    background-color: #F4F4F4;
+}
+
+.menu.show {
+    display: flex;
+}
+
+/* Carrito */
+#carrito-contenido {
+    position: relative;
+}
+
+#carrito {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+#contador-carrito {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Estilo general para el header */
+header a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+header a:hover {
+    text-decoration: underline;
 }

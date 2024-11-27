@@ -1,82 +1,78 @@
 import Usuario from "../models/usuario.js";
 import bcrypt from "bcryptjs";
 
+// Mostrar formulario de login
 export const mostrarLogin = (req, res) => {
     res.render("login");
 };
 
+// Registrar un nuevo usuario
 export const registrarUsuario = async (req, res) => {
     const { username, email, password } = req.body;
     try {
-        // Se define el rol por defecto como "cliente"
-        const rol = "cliente";
+        const rol = "cliente"; // Rol por defecto
         const hashedPassword = await bcrypt.hash(password, 10);
-        // Crea el nuevo usuario
+
         const nuevoUsuario = await Usuario.create({
             username,
             email,
-            password: hashedPassword,  // Asumiendo que estás encriptando la contraseña antes de guardar
+            password: hashedPassword,
             rol,
         });
         console.log("Usuario registrado:", nuevoUsuario);
 
-        // Redirigir al login o página de éxito
-        res.redirect('/login');
+        res.redirect("/login"); // Redirigir al formulario de login
     } catch (error) {
         console.error("Error al registrar usuario:", error);
         res.status(500).send("Error al registrar usuario");
     }
 };
 
-
-export const autenticarUsuario = async (req, res) => {
+// Iniciar sesión y mantener la sesión activa
+export const iniciarSesion = async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const usuario = await Usuario.findOne({ where: { email } });
-
         if (!usuario) {
-            return res.status(401).send("Usuario no encontrado");
+            return res.status(400).send("Usuario o contraseña incorrectos");
+        }
+        const esContraseñaValida = await bcrypt.compare(password, usuario.password);
+        if (!esContraseñaValida) {
+            return res.status(400).send("Usuario o contraseña incorrectos");
         }
 
-        const contraseñaCorrecta = await bcrypt.compare(password, usuario.password);
-        if (!contraseñaCorrecta) {
-            return res.status(401).send("Contraseña incorrecta");
-        }
+        // Establecer la sesión
+        req.session.user = { id: usuario.id, username: usuario.username, rol: usuario.rol };
 
-        res.send("Inicio de sesión exitoso");
+        console.log("Sesión iniciada para el usuario:", usuario.username);
+        res.redirect("/"); // Redirigir al inicio
     } catch (error) {
-        console.error("Error al autenticar usuario:", error);
-        res.status(500).send("Error interno del servidor");
+        console.error("Error al iniciar sesión:", error);
+        res.status(500).send("Error al iniciar sesión");
     }
 };
 
-export const iniciarSesion = async (req, res) => {
-    const { username, password } = req.body;
-
-    try {
-        // Buscar al usuario por su nombre de usuario
-        const usuario = await Usuario.findOne({
-            where: { username }
-        });
-
-        // Si el usuario no existe
-        if (!usuario) {
-            return res.status(400).send('Usuario o contraseña incorrectos');
+// Cerrar sesión
+export const cerrarSesion = (req, res) => {
+    // Destruir la sesión
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error al cerrar sesión:", err);
+            return res.status(500).send("Error al cerrar sesión");
         }
 
-        // Comparar la contraseña ingresada con la contraseña cifrada en la base de datos
-        const esContraseñaValida = await bcrypt.compare(password, usuario.password);
+        // Redirigir al login
+        res.redirect("/login");
+    });
+};
 
-        // Si la contraseña es incorrecta
-        if (!esContraseñaValida) {
-            return res.status(400).send('Usuario o contraseña incorrectos');
-        }
-
-        // Si la contraseña es correcta, iniciar sesión (podrías redirigir al usuario o usar sesiones)
-        res.redirect('/');  // Redirigir a la página principal o cualquier otra página
-    } catch (error) {
-        console.error('Error al iniciar sesión:', error);
-        res.status(500).send('Error al iniciar sesión');
+// Middleware para verificar la sesión
+export const verificarSesion = (req, res, next) => {
+    if (req.session && req.session.user) {
+        console.log("Usuario autenticado:", req.session.user.username);
+        res.render("/")
     }
-}; 
+
+    console.log("Usuario no autenticado");
+    res.redirect("/login");
+};
